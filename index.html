@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GlobalPhDHub — Unleash Your Potential</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #060912;
+    color: #e8eaf0;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ===== CSS VARIABLES ===== */
+  :root {
+    --bg-deep:      #060912;
+    --bg-card:      #0d1120;
+    --bg-glass:     rgba(255,255,255,0.04);
+    --border:       rgba(255,255,255,0.08);
+    --brand-1:      #1a1f3a;        /* deep navy */
+    --brand-2:      #0f1628;        /* darker navy */
+    --accent:       #f5a623;        /* warm amber */
+    --accent-alt:   #e84393;        /* vibrant pink */
+    --green:        #00d68f;
+    --text-primary: #f0f2fa;
+    --text-muted:   #7a85a3;
+    --text-dim:     #4a5270;
+    --glow-amber:   rgba(245,166,35,0.18);
+    --glow-pink:    rgba(232,67,147,0.14);
+    --radius-lg:    20px;
+    --radius-xl:    28px;
+    --shadow-card:  0 8px 40px rgba(0,0,0,0.45);
+  }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg-deep); }
+  ::-webkit-scrollbar-thumb { background: #2a3055; border-radius: 10px; }
+
+  /* ===== UTILITY ===== */
+  .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+  .accent { color: var(--accent); }
+  .accent-pink { color: var(--accent-alt); }
+
+  /* ===== NOISE OVERLAY ===== */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+
+  /* ===== SECTION BASE ===== */
+  section { position: relative; z-index: 1; }
+
+  /* ===== SCROLL REVEAL ===== */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal-left.visible { opacity: 1; transform: none; }
+  .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal-right.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ===== NAVBAR ===== */
+  .navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 0 0;
+    transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+  }
+  .navbar.scrolled {
+    background: rgba(6,9,18,0.92);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 var(--border);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 0;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 18px; color: #fff;
+    box-shadow: 0 4px 16px rgba(245,166,35,0.35);
+  }
+  .nav-logo-text {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 1.1rem; color: var(--text-primary);
+  }
+  .nav-logo-text span { color: var(--accent); }
+  .nav-links {
+    display: flex; align-items: center; gap: 6px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none; color: var(--text-muted);
+    font-size: 0.9rem; font-weight: 500;
+    padding: 8px 14px; border-radius: 10px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-links a:hover { color: var(--text-primary); background: var(--bg-glass); }
+  .nav-links a.active { color: var(--accent); }
+  .nav-cta {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .btn-ghost {
+    padding: 9px 20px; border-radius: 12px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--text-primary); font-size: 0.88rem; font-weight: 500;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.2s, background 0.2s;
+    text-decoration: none;
+  }
+  .btn-ghost:hover { border-color: var(--accent); background: var(--glow-amber); color: var(--accent); }
+  .btn-primary {
+    padding: 10px 22px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), #e8891a);
+    color: #0a0804; font-size: 0.88rem; font-weight: 700;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    border: none; text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 18px rgba(245,166,35,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(245,166,35,0.45); }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--text-primary); font-size: 1.4rem; }
+  .mobile-menu {
+    display: none; position: fixed; top: 74px; left: 0; right: 0;
+    background: rgba(6,9,18,0.97); backdrop-filter: blur(20px);
+    padding: 20px 24px 30px; z-index: 999;
+    border-bottom: 1px solid var(--border);
+  }
+  .mobile-menu.open { display: block; }
+  .mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .mobile-menu ul a { display: block; padding: 12px 0; color: var(--text-muted); text-decoration: none; font-size: 1rem; font-weight: 500; border-bottom: 1px solid var(--border); }
+  .mobile-menu ul a:last-child { border-bottom: none; }
+  .mobile-menu-cta { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .mobile-menu-cta .btn-primary { text-align: center; display: block; padding: 14px; border-radius: 14px; }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding-top: 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 60% -10%, rgba(245,166,35,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 0% 80%, rgba(232,67,147,0.1) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 100% 70%, rgba(26,50,130,0.18) 0%, transparent 50%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 780px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.25);
+    padding: 7px 16px; border-radius: 100px;
+    font-size: 0.8rem; font-weight: 600; color: var(--accent);
+    margin-bottom: 28px; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .hero-badge span { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: pulse-dot 2s infinite; }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+<div style="margin-top:20px;">
+  <input id="name" placeholder="Your Name" /><br><br>
+  <input id="email" placeholder="Your Email" /><br><br>
+  <input id="phone" placeholder="Phone Number" /><br><br>
+
+  <button onclick="registerUser()">Start My Journey</button>
+</div>
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 800; line-height: 1.05;
+    color: var(--text-primary); letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .hero h1 .highlight {
+    position: relative; display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    color: var(--text-muted); max-width: 560px;
+    line-height: 1.7; margin-bottom: 40px;
+  }
+  .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 56px; }
+  .btn-hero {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 30px; border-radius: 14px;
+    background: linear-gradient(135deg, var(--accent), #e8891a);
+    color: #0a0804; font-weight: 700; font-size: 1rem;
+    text-decoration: none; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    box-shadow: 0 6px 30px rgba(245,166,35,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: pulse-cta 3s ease-in-out infinite;
+  }
+  @keyframes pulse-cta {
+    0%, 100% { box-shadow: 0 6px 30px rgba(245,166,35,0.4); }
+    50% { box-shadow: 0 6px 50px rgba(245,166,35,0.65); }
+  }
+  .btn-hero:hover { transform: translateY(-3px); animation: none; box-shadow: 0 12px 40px rgba(245,166,35,0.55); }
+  .btn-hero-outline {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 28px; border-radius: 14px;
+    border: 1px solid var(--border); background: var(--bg-glass);
+    color: var(--text-primary); font-weight: 600; font-size: 1rem;
+    text-decoration: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-hero-outline:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.07); }
+  .hero-stats {
+    display: flex; gap: 40px; flex-wrap: wrap;
+  }
+  .hero-stat-item { display: flex; flex-direction: column; }
+  .hero-stat-num {
+    font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800;
+    color: var(--text-primary); line-height: 1;
+  }
+  .hero-stat-num span { color: var(--accent); }
+  .hero-stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+
+  /* floating cards */
+  .hero-float-area { position: relative; z-index: 2; display: flex; justify-content: flex-end; align-items: center; }
+  .hero-card-stack { position: relative; width: 340px; height: 420px; }
+  .hero-float-card {
+    position: absolute;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 18px; padding: 18px 20px;
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(10px);
+  }
+  .fc-1 { top: 0; right: 0; width: 260px; animation: float1 5s ease-in-out infinite; }
+  .fc-2 { top: 130px; left: 0; width: 240px; animation: float2 5.5s ease-in-out infinite; }
+  .fc-3 { bottom: 0; right: 20px; width: 230px; animation: float3 4.8s ease-in-out infinite; }
+  @keyframes float1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+  @keyframes float2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(12px)} }
+  @keyframes float3 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .fc-uni-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .fc-flag { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg,#003580,#fff,#cf142b); display:flex;align-items:center;justify-content:center;font-size:14px; }
+  .fc-title { font-family:'Syne',sans-serif; font-size:.82rem; font-weight:700; color:var(--text-primary); }
+  .fc-sub { font-size:.72rem; color:var(--text-muted); }
+  .fc-tag { display:inline-block; padding:3px 10px; border-radius:20px; font-size:.68rem; font-weight:700; }
+  .tag-green { background:rgba(0,214,143,0.12); color:var(--green); border:1px solid rgba(0,214,143,0.2); }
+  .tag-amber { background:rgba(245,166,35,0.12); color:var(--accent); border:1px solid rgba(245,166,35,0.2); }
+  .tag-pink { background:rgba(232,67,147,0.12); color:var(--accent-alt); border:1px solid rgba(232,67,147,0.2); }
+  .fc-progress-bar { height:5px; border-radius:10px; background:rgba(255,255,255,0.08); margin-top:10px; overflow:hidden; }
+  .fc-progress-fill { height:100%; border-radius:10px; background:linear-gradient(90deg,var(--accent),var(--accent-alt)); }
+  .fc-score { display:flex; justify-content:space-between; align-items:center; }
+  .fc-score-num { font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:800; color:var(--accent); }
+  .fc-avatar-row { display:flex; gap:-8px; margin-bottom:8px; }
+  .fc-avatar { width:30px; height:30px; border-radius:50%; border:2px solid var(--bg-card); font-size:13px; display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2a3060,#3d4580); }
+
+  .hero-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  @media(max-width:900px){ .hero-two-col{grid-template-columns:1fr;} .hero-float-area{display:none;} }
+
+  /* ===== LOGOS STRIP ===== */
+  .logos-strip {
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden; position: relative;
+  }
+  .logos-label { text-align:center; font-size:.75rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim); margin-bottom:20px; }
+  .logos-track { display:flex; gap:48px; align-items:center; width:max-content; animation:logos-scroll 30s linear infinite; }
+  .logos-track:hover { animation-play-state:paused; }
+  @keyframes logos-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  .logo-item { display:flex;align-items:center;gap:10px; white-space:nowrap; opacity:0.45; transition:opacity .2s; }
+  .logo-item:hover { opacity:0.85; }
+  .logo-item i { font-size:1.1rem; color:var(--text-muted); }
+  .logo-item span { font-family:'Syne',sans-serif; font-size:.85rem; font-weight:700; color:var(--text-muted); letter-spacing:0.05em; }
+
+  /* ===== SECTION LABELS ===== */
+  .section-label {
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:14px;
+  }
+  .section-label::before { content:''; width:20px; height:2px; background:var(--accent); display:block; }
+  .section-title {
+    font-family:'Syne',sans-serif; font-size:clamp(2rem,4vw,3rem);
+    font-weight:800; line-height:1.1; color:var(--text-primary);
+    letter-spacing:-0.02em; margin-bottom:14px;
+  }
+  .section-sub { font-size:1rem; color:var(--text-muted); max-width:520px; line-height:1.7; }
+  .section-header-row { display:flex; justify-content:space-between; align-items:flex-end; gap:30px; margin-bottom:56px; flex-wrap:wrap; }
+
+  /* ===== HOW IT WORKS ===== */
+  .how-section { padding: 100px 0; }
+  .steps-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
+  @media(max-width:900px){ .steps-grid{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:560px){ .steps-grid{grid-template-columns:1fr;} }
+  .step-card {
+    background:var(--bg-card); border:1px solid var(--border);
+    padding:36px 28px; position:relative; overflow:hidden;
+    transition:border-color .3s, background .3s;
+  }
+  .step-card:first-child { border-radius:var(--radius-lg) 0 0 var(--radius-lg); }
+  .step-card:last-child { border-radius:0 var(--radius-lg) var(--radius-lg) 0; }
+  .step-card:hover { border-color:rgba(245,166,35,0.3); background:rgba(245,166,35,0.03); }
+  .step-num {
+    font-family:'Syne',sans-serif; font-size:4rem; font-weight:800;
+    color:rgba(255,255,255,0.04); line-height:1; margin-bottom:20px;
+    position:absolute; top:16px; right:20px;
+  }
+  .step-icon-wrap {
+    width:48px; height:48px; border-radius:14px;
+    background:var(--glow-amber); border:1px solid rgba(245,166,35,0.2);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.25rem; color:var(--accent); margin-bottom:20px;
+  }
+  .step-card h3 { font-family:'Syne',sans-serif; font-size:1.05rem; font-weight:700; color:var(--text-primary); margin-bottom:10px; }
+  .step-card p { font-size:.88rem; color:var(--text-muted); line-height:1.7; }
+  .step-connector { position:absolute; right:-1px; top:50%; transform:translateY(-50%); width:2px; height:40%; background:linear-gradient(to bottom,transparent,var(--accent),transparent); opacity:0.4; }
+  .step-card:last-child .step-connector { display:none; }
+
+  /* ===== FEATURES ===== */
+  .features-section { padding:100px 0; }
+  .features-bg {
+    position:absolute; inset:0; z-index:0;
+    background:radial-gradient(ellipse 70% 60% at 85% 50%,rgba(232,67,147,0.07) 0%,transparent 60%);
+  }
+  .features-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  @media(max-width:900px){ .features-grid{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:560px){ .features-grid{grid-template-columns:1fr;} }
+  .feature-card {
+    background:var(--bg-card); border:1px solid var(--border);
+    border-radius:var(--radius-lg); padding:30px;
+    transition:transform .3s, border-color .3s, box-shadow .3s;
+    position:relative; overflow:hidden;
+  }
+  .feature-card::before {
+    content:''; position:absolute; inset:0; opacity:0;
+    background:radial-gradient(ellipse 60% 50% at 30% 30%,rgba(245,166,35,0.08),transparent);
+    transition:opacity .3s;
+  }
+  .feature-card:hover { transform:translateY(-6px); border-color:rgba(245,166,35,0.25); box-shadow:0 20px 60px rgba(0,0,0,0.4); }
+  .feature-card:hover::before { opacity:1; }
+  .feature-card.featured {
+    background:linear-gradient(135deg,rgba(245,166,35,0.1),rgba(232,67,147,0.06));
+    border-color:rgba(245,166,35,0.3);
+    grid-column:span 1;
+  }
+  .feature-icon { width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:20px; }
+  .icon-amber { background:rgba(245,166,35,0.12); color:var(--accent); border:1px solid rgba(245,166,35,0.2); }
+  .icon-pink { background:rgba(232,67,147,0.1); color:var(--accent-alt); border:1px solid rgba(232,67,147,0.2); }
+  .icon-green { background:rgba(0,214,143,0.1); color:var(--green); border:1px solid rgba(0,214,143,0.2); }
+  .icon-blue { background:rgba(100,130,255,0.1); color:#8096ff; border:1px solid rgba(100,130,255,0.2); }
+  .icon-purple { background:rgba(160,100,255,0.1); color:#b46eff; border:1px solid rgba(160,100,255,0.2); }
+  .feature-card h3 { font-family:'Syne',sans-serif; font-size:1.05rem; font-weight:700; color:var(--text-primary); margin-bottom:10px; }
+  .feature-card p { font-size:.87rem; color:var(--text-muted); line-height:1.7; }
+  .feature-tag { display:inline-block;margin-top:14px;padding:4px 12px;border-radius:20px;font-size:.7rem;font-weight:700; }
+
+  /* ===== STATS BAR ===== */
+  .stats-bar { padding:70px 0; }
+  .stats-bar-inner {
+    background:linear-gradient(135deg,rgba(245,166,35,0.08),rgba(232,67,147,0.06));
+    border:1px solid rgba(245,166,35,0.15); border-radius:var(--radius-xl);
+    padding:50px 60px;
+    display:grid; grid-template-columns:repeat(4,1fr); gap:30px;
+  }
+  @media(max-width:900px){ .stats-bar-inner{grid-template-columns:repeat(2,1fr); padding:36px 30px;} }
+  @media(max-width:560px){ .stats-bar-inner{grid-template-columns:1fr;} }
+  .stat-item { text-align:center; }
+  .stat-num { font-family:'Syne',sans-serif; font-size:clamp(2rem,4vw,3rem); font-weight:800; color:var(--text-primary); line-height:1; }
+  .stat-num .plus { color:var(--accent); }
+  .stat-desc { font-size:.85rem; color:var(--text-muted); margin-top:6px; }
+
+  /* ===== PRICING ===== */
+  .pricing-section { padding:100px 0; }
+  .pricing-toggle { display:flex;align-items:center;gap:14px;margin-bottom:50px; }
+  .toggle-label { font-size:.9rem;color:var(--text-muted);font-weight:500; }
+  .toggle-label.active { color:var(--text-primary); }
+  .toggle-switch { width:50px;height:26px;border-radius:13px;background:rgba(255,255,255,0.1);border:1px solid var(--border);position:relative;cursor:pointer;transition:background .3s; }
+  .toggle-switch.on { background:linear-gradient(135deg,var(--accent),#e8891a); }
+  .toggle-knob { position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .3s; }
+  .toggle-switch.on .toggle-knob { transform:translateX(24px); }
+  .save-badge { background:rgba(0,214,143,0.12);color:var(--green);border:1px solid rgba(0,214,143,0.25);padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700; }
+  .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  @media(max-width:900px){ .pricing-grid{grid-template-columns:1fr;max-width:420px;} }
+  .price-card {
+    background:var(--bg-card); border:1px solid var(--border);
+    border-radius:var(--radius-xl); padding:36px 32px;
+    position:relative; overflow:hidden;
+    transition:transform .3s, box-shadow .3s;
+  }
+  .price-card:hover { transform:translateY(-5px); box-shadow:0 24px 60px rgba(0,0,0,0.5); }
+  .price-card.popular {
+    border-color:rgba(245,166,35,0.4);
+    background:linear-gradient(160deg,rgba(245,166,35,0.07),rgba(232,67,147,0.04),var(--bg-card));
+    transform:scale(1.03);
+  }
+  .price-card.popular:hover { transform:scale(1.03) translateY(-5px); }
+  .popular-badge {
+    position:absolute; top:20px; right:20px;
+    background:linear-gradient(135deg,var(--accent),#e8891a);
+    color:#0a0804; font-size:.68rem; font-weight:800; letter-spacing:.06em;
+    padding:4px 12px; border-radius:20px; text-transform:uppercase;
+  }
+  .price-plan-name { font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px; }
+  .price-amount { display:flex; align-items:flex-end; gap:4px; margin-bottom:6px; }
+  .price-currency { font-size:1.4rem;font-weight:700;color:var(--text-primary);padding-bottom:6px; }
+  .price-num { font-family:'Syne',sans-serif;font-size:3.2rem;font-weight:800;color:var(--text-primary);line-height:1; }
+  .price-period { font-size:.85rem;color:var(--text-muted);padding-bottom:6px; }
+  .price-desc { font-size:.85rem;color:var(--text-muted);margin-bottom:28px;line-height:1.6; }
+  .price-divider { height:1px;background:var(--border);margin-bottom:24px; }
+  .price-features { list-style:none;display:flex;flex-direction:column;gap:13px;margin-bottom:32px; }
+  .price-features li { display:flex;align-items:flex-start;gap:10px;font-size:.88rem;color:var(--text-muted); }
+  .price-features li i { color:var(--green);margin-top:2px;flex-shrink:0; }
+  .price-features li.dim i { color:var(--text-dim); }
+  .price-features li.dim { color:var(--text-dim); text-decoration:line-through; }
+  .btn-plan {
+    display:block; width:100%; padding:14px;text-align:center;
+    border-radius:14px; font-weight:700; font-size:.95rem;
+    font-family:'DM Sans',sans-serif; cursor:pointer;
+    transition:transform .2s,box-shadow .2s;
+    text-decoration:none;
+  }
+  .btn-plan-ghost { border:1px solid var(--border); background:transparent; color:var(--text-primary); }
+  .btn-plan-ghost:hover { border-color:var(--accent); color:var(--accent); background:var(--glow-amber); }
+  .btn-plan-primary {
+    background:linear-gradient(135deg,var(--accent),#e8891a);
+    color:#0a0804; border:none;
+    box-shadow:0 6px 24px rgba(245,166,35,0.35);
+  }
+  .btn-plan-primary:hover { transform:translateY(-2px); box-shadow:0 12px 36px rgba(245,166,35,0.5); }
+
+  /* ===== TESTIMONIALS ===== */
+  .testimonials-section { padding:100px 0; overflow:hidden; }
+  .testimonials-bg {
+    position:absolute; inset:0; z-index:0;
+    background:radial-gradient(ellipse 80% 60% at 20% 60%,rgba(245,166,35,0.06),transparent 60%);
+  }
+  .testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  @media(max-width:900px){ .testi-grid{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:560px){ .testi-grid{grid-template-columns:1fr;} }
+  .testi-card {
+    background:var(--bg-card); border:1px solid var(--border);
+    border-radius:var(--radius-lg); padding:28px;
+    transition:transform .3s, border-color .3s;
+  }
+  .testi-card:hover { transform:translateY(-4px); border-color:rgba(255,255,255,0.12); }
+  .testi-card.featured-testi { border-color:rgba(245,166,35,0.25); background:linear-gradient(135deg,rgba(245,166,35,0.05),var(--bg-card)); }
+  .testi-stars { color:var(--accent); font-size:.85rem; letter-spacing:2px; margin-bottom:14px; }
+  .testi-quote { font-size:.92rem; color:var(--text-muted); line-height:1.75; margin-bottom:20px; font-style:italic; }
+  .testi-quote strong { color:var(--text-primary); font-style:normal; }
+  .testi-footer { display:flex; align-items:center; gap:12px; }
+  .testi-avatar { width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;flex-shrink:0; }
+  .av-1 { background:linear-gradient(135deg,#f5a623,#e84393); color:#fff; }
+  .av-2 { background:linear-gradient(135deg,#6482ff,#a064ff); color:#fff; }
+  .av-3 { background:linear-gradient(135deg,#00d68f,#0099ff); color:#fff; }
+  .av-4 { background:linear-gradient(135deg,#e84393,#f5a623); color:#fff; }
+  .av-5 { background:linear-gradient(135deg,#a064ff,#6482ff); color:#fff; }
+  .av-6 { background:linear-gradient(135deg,#0099ff,#00d68f); color:#fff; }
+  .testi-name { font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:var(--text-primary); }
+  .testi-meta { font-size:.75rem;color:var(--text-muted); }
+  .testi-uni-badge { margin-left:auto; display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.05);border:1px solid var(--border);padding:4px 10px;border-radius:8px; }
+  .testi-uni-badge span { font-size:.68rem;color:var(--text-muted);font-weight:600; }
+
+  /* ===== FAQ ===== */
+  .faq-section { padding:100px 0; }
+  .faq-wrap { max-width:720px; margin:0 auto; }
+  .faq-item {
+    border-bottom:1px solid var(--border);
+    padding:0;
+  }
+  .faq-q {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 0; cursor:pointer;
+    font-family:'Syne',sans-serif; font-size:1rem; font-weight:600;
+    color:var(--text-primary);
+    transition:color .2s;
+    gap:16px;
+  }
+  .faq-q:hover { color:var(--accent); }
+  .faq-icon {
+    width:28px; height:28px; border-radius:8px;
+    border:1px solid var(--border); display:flex;align-items:center;justify-content:center;
+    font-size:.8rem; color:var(--text-muted); flex-shrink:0;
+    transition:transform .3s, background .3s, color .3s;
+  }
+  .faq-item.open .faq-icon { transform:rotate(45deg); background:var(--glow-amber); color:var(--accent); border-color:rgba(245,166,35,0.3); }
+  .faq-a {
+    max-height:0; overflow:hidden;
+    font-size:.9rem; color:var(--text-muted); line-height:1.75;
+    transition:max-height .4s ease, padding .4s ease;
+  }
+  .faq-item.open .faq-a { max-height:300px; padding-bottom:20px; }
+
+  /* ===== MID CTA BANNER ===== */
+  .cta-banner { padding:80px 0; }
+  .cta-banner-inner {
+    background:linear-gradient(135deg,rgba(245,166,35,0.12),rgba(232,67,147,0.08));
+    border:1px solid rgba(245,166,35,0.2); border-radius:var(--radius-xl);
+    padding:64px 60px; text-align:center; position:relative; overflow:hidden;
+  }
+  .cta-banner-inner::before {
+    content:''; position:absolute;
+    width:400px; height:400px; border-radius:50%;
+    background:radial-gradient(circle,rgba(245,166,35,0.15),transparent 70%);
+    top:-100px; left:-80px; pointer-events:none;
+  }
+  .cta-banner-inner::after {
+    content:''; position:absolute;
+    width:300px; height:300px; border-radius:50%;
+    background:radial-gradient(circle,rgba(232,67,147,0.12),transparent 70%);
+    bottom:-60px; right:-60px; pointer-events:none;
+  }
+  .cta-banner h2 {
+    font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);
+    font-weight:800;color:var(--text-primary);margin-bottom:14px;
+    position:relative;z-index:1;
+  }
+  .cta-banner p { font-size:1rem;color:var(--text-muted);max-width:480px;margin:0 auto 32px;position:relative;z-index:1; }
+  .cta-banner-btns { display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    border-top:1px solid var(--border); padding:60px 0 30px;
+    position:relative; z-index:1;
+  }
+  .footer-grid { display:grid; grid-template-columns:1.8fr 1fr 1fr 1fr; gap:40px; margin-bottom:50px; }
+  @media(max-width:900px){ .footer-grid{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:560px){ .footer-grid{grid-template-columns:1fr;} }
+  .footer-brand p { font-size:.88rem;color:var(--text-muted);line-height:1.7;margin-top:14px;max-width:280px; }
+  .footer-social { display:flex;gap:10px;margin-top:20px; }
+  .footer-social a {
+    width:36px;height:36px;border-radius:10px;
+    border:1px solid var(--border); display:flex;align-items:center;justify-content:center;
+    color:var(--text-muted); font-size:.9rem; text-decoration:none;
+    transition:border-color .2s,color .2s,background .2s;
+  }
+  .footer-social a:hover { border-color:var(--accent);color:var(--accent);background:var(--glow-amber); }
+  .footer-col h4 { font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;color:var(--text-primary);margin-bottom:16px;letter-spacing:.04em; }
+  .footer-col ul { list-style:none;display:flex;flex-direction:column;gap:10px; }
+  .footer-col ul li a { font-size:.85rem;color:var(--text-muted);text-decoration:none;transition:color .2s; }
+  .footer-col ul li a:hover { color:var(--accent); }
+  .footer-bottom { display:flex;justify-content:space-between;align-items:center;padding-top:30px;border-top:1px solid var(--border);flex-wrap:wrap;gap:14px; }
+  .footer-bottom p { font-size:.8rem;color:var(--text-dim); }
+  .footer-bottom-links { display:flex;gap:20px; }
+  .footer-bottom-links a { font-size:.8rem;color:var(--text-dim);text-decoration:none;transition:color .2s; }
+  .footer-bottom-links a:hover { color:var(--text-muted); }
+
+  /* ===== FLOATING ELIGIBILITY WIDGET ===== */
+  .float-widget {
+    position:fixed; bottom:28px; right:28px; z-index:900;
+    background:linear-gradient(135deg,var(--accent),#e8891a);
+    color:#0a0804; padding:14px 22px; border-radius:50px;
+    font-weight:700; font-size:.88rem;
+    box-shadow:0 8px 30px rgba(245,166,35,0.5);
+    cursor:pointer; display:flex;align-items:center;gap:10px;
+    animation:widget-bounce 4s ease-in-out infinite;
+    text-decoration:none;
+    transition:transform .2s;
+  }
+  .float-widget:hover { transform:scale(1.05); animation:none; }
+  @keyframes widget-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  @media(max-width:600px){ .float-widget{bottom:18px;right:18px;padding:12px 18px;font-size:.82rem;} }
+
+  /* ===== RESPONSIVE NAV ===== */
+  @media(max-width:860px){
+    .nav-links,.nav-cta { display:none; }
+    .hamburger { display:block; }
+  }
+  @media(max-width:560px){
+    .hero-stats { gap:24px; }
+    .hero-actions { flex-direction:column; align-items:flex-start; }
+    .btn-hero,.btn-hero-outline { width:100%; justify-content:center; }
+  }
+  @media(max-width:560px){
+    .cta-banner-inner { padding:36px 24px; }
+    .stats-bar-inner { padding:30px 20px; }
+  }
+
+  /* ===== SECTION SPACING ===== */
+  .section-padding { padding:100px 0; }
+</style>
+</head>
+<body>
+
+<!-- FLOATING CTA WIDGET -->
+<a href="#" class="float-widget" onclick="return false;">
+  <i class="fa-solid fa-bolt"></i> Check My Eligibility
+</a>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">G</div>
+        <span class="nav-logo-text">Global<span>PhD</span>Hub</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#features">Services</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#testimonials">Success Stories</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#" class="btn-ghost">Sign In</a>
+        <a href="#" class="btn-primary">Start My Journey</a>
+      </div>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#how-it-works" onclick="closeMobile()">How It Works</a></li>
+    <li><a href="#features" onclick="closeMobile()">Services</a></li>
+    <li><a href="#pricing" onclick="closeMobile()">Pricing</a></li>
+    <li><a href="#testimonials" onclick="closeMobile()">Success Stories</a></li>
+    <li><a href="#faq" onclick="closeMobile()">FAQ</a></li>
+  </ul>
+  <div class="mobile-menu-cta">
+   
+  
+
+ 
+
+  <button onclick="registerUser()" class="btn-hero">
+    Start My Journey →
+  </button>
+</div>
+    <a href="#" class="btn-ghost" style="text-align:center;padding:12px;">Get Free Counselling</a>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="container" style="position:relative;z-index:2;width:100%;">
+    <div class="hero-two-col">
+      <div class="hero-content">
+        <div class="hero-badge reveal">
+          <span></span> India's #1 Study Abroad Platform
+        </div>
+        <h1 class="reveal reveal-delay-1">
+          Your Dream<br/>University.<br/><span class="highlight">Our Obsession.</span>
+        </h1>
+        <p class="hero-sub reveal reveal-delay-2">
+          From shortlisting universities to landing a visa — we've got your entire abroad journey covered. Join 15,000+ students who turned their ambition into a degree.
+        </p>
+        <div class="hero-actions reveal reveal-delay-3">
+         <div class="hero-actions reveal reveal-delay-3" style="flex-direction:column; align-items:flex-start;">
+
+  <input id="name" placeholder="Your Name" style="padding:12px;width:280px;border-radius:8px;border:none;margin-bottom:10px;">
+  
+  <input id="email" placeholder="Your Email" style="padding:12px;width:280px;border-radius:8px;border:none;margin-bottom:10px;">
+  
+  <input id="phone" placeholder="Phone Number" style="padding:12px;width:280px;border-radius:8px;border:none;margin-bottom:15px;">
+
+  <button onclick="registerUser()" class="btn-hero">
+    Start My Journey →
+  </button>
+
+</div>
+        </div>
+        <div class="hero-stats reveal reveal-delay-4">
+          <div class="hero-stat-item">
+            <div class="hero-stat-num">15K<span>+</span></div>
+            <div class="hero-stat-label">Students Placed</div>
+          </div>
+          <div class="hero-stat-item">
+            <div class="hero-stat-num">98<span>%</span></div>
+            <div class="hero-stat-label">Visa Success Rate</div>
+          </div>
+          <div class="hero-stat-item">
+            <div class="hero-stat-num">500<span>+</span></div>
+            <div class="hero-stat-label">Partner Universities</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-float-area">
+        <div class="hero-card-stack">
+          <!-- Card 1 -->
+          <div class="hero-float-card fc-1">
+            <div class="fc-uni-row">
+              <div class="fc-flag">🇺🇸</div>
+              <div>
+                <div class="fc-title">Columbia University</div>
+                <div class="fc-sub">MS Computer Science</div>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="fc-tag tag-green">✓ Offer Received</span>
+              <span style="font-size:.7rem;color:var(--text-muted);">Scholarship: $18K</span>
+            </div>
+            <div class="fc-progress-bar" style="margin-top:12px;">
+              <div class="fc-progress-fill" style="width:90%;"></div>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="hero-float-card fc-2">
+            <div class="fc-avatar-row">
+              <div class="fc-avatar">P</div>
+              <div class="fc-avatar" style="margin-left:-8px;">R</div>
+              <div class="fc-avatar" style="margin-left:-8px;">S</div>
+              <div class="fc-avatar" style="margin-left:-8px;font-size:.65rem;">+12</div>
+            </div>
+            <div class="fc-title" style="margin-bottom:4px;">Profile reviewed today</div>
+            <div class="fc-sub">Your counselor is online</div>
+            <div style="margin-top:12px;">
+              <span class="fc-tag tag-amber">Session in 2h</span>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="hero-float-card fc-3">
+            <div class="fc-score">
+              <div>
+                <div class="fc-title" style="margin-bottom:2px;">Eligibility Score</div>
+                <div class="fc-sub">For US Masters Programs</div>
+              </div>
+              <div class="fc-score-num">94<span style="font-size:1rem;color:var(--text-muted);">/100</span></div>
+            </div>
+            <div class="fc-progress-bar">
+              <div class="fc-progress-fill" style="width:94%;"></div>
+            </div>
+            <div style="margin-top:12px;"><span class="fc-tag tag-pink">Strong Profile 🚀</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LOGOS STRIP ===== -->
+<section style="position:relative;z-index:1;">
+  <div class="logos-strip">
+    <div class="logos-label">Trusted partner universities worldwide</div>
+    <div class="logos-track">
+      <div class="logo-item"><i class="fa-solid fa-graduation-cap"></i><span>MIT</span></div>
+      <div class="logo-item"><i class="fa-solid fa-building-columns"></i><span>Stanford</span></div>
+      <div class="logo-item"><i class="fa-solid fa-graduation-cap"></i><span>Harvard</span></div>
+      <div class="logo-item"><i class="fa-solid fa-building-columns"></i><span>Oxford</span></div>
+      <div class="logo-item"><i class="fa-solid fa-graduation-cap"></i><span>Columbia</span></div>
+      <div class="logo-item"><i class="fa-solid fa-building-columns"></i><span>Cambridge</span></div>
+      <div class="logo-item"><i class="fa-solid fa-graduation-cap"></i><span>NUS Singapore</span></div>
+      <div class="logo-item"><i class="fa-solid fa-building-columns"></i><span>TU Munich</span></div>
+      <div class="logo-item"><i class="fa-solid fa-graduation-cap"></i><span>NYU</span></div>
+      <div class="logo-item"><i class="fa-solid fa-building-columns"></i><span>UCLA</span></div>
+      <div class="logo-item"><i class="fa-solid fa-graduation-cap"></i><span>U of Toronto</span></div>
+      <div class="logo-item"><i class="fa-solid fa-building-columns"></i><span>Imperial London</span></div>
+      <!-- duplicates for infinite loop -->
+      <div class="logo-item"><i class="fa-solid fa-graduation-cap"></i><span>MIT</span></div>
+      <div class="logo-item"><i class="fa-solid fa-building-columns"></i><span>Stanford</span></div>
+      <div class="logo-item"><i class="fa-solid fa-graduation-cap"></i><span>Harvard</span></div>
+      <div class="logo-item"><i class="fa-solid fa-building-columns"></i><span>Oxford</span></div>
+      <div class="logo-item"><i class="fa-solid fa-graduation-cap"></i><span>Columbia</span></div>
+      <div class="logo-item"><i class="fa-solid fa-building-columns"></i><span>Cambridge</span></div>
+      <div class="logo-item"><i class="fa-solid fa-graduation-cap"></i><span>NUS Singapore</span></div>
+      <div class="logo-item"><i class="fa-solid fa-building-columns"></i><span>TU Munich</span></div>
+      <div class="logo-item"><i class="fa-solid fa-graduation-cap"></i><span>NYU</span></div>
+      <div class="logo-item"><i class="fa-solid fa-building-columns"></i><span>UCLA</span></div>
+      <div class="logo-item"><i class="fa-solid fa-graduation-cap"></i><span>U of Toronto</span></div>
+      <div class="logo-item"><i class="fa-solid fa-building-columns"></i><span>Imperial London</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS BAR ===== -->
+<section class="stats-bar" style="position:relative;z-index:1;">
+  <div class="container">
+    <div class="stats-bar-inner reveal">
+      <div class="stat-item">
+        <div class="stat-num">15,000<span class="plus">+</span></div>
+        <div class="stat-desc">Students successfully placed at global universities</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">98<span class="plus">%</span></div>
+        <div class="stat-desc">Visa approval rate across all destinations</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">₹480<span class="plus">Cr+</span></div>
+        <div class="stat-desc">Total scholarships secured for our students</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">500<span class="plus">+</span></div>
+        <div class="stat-desc">Partner universities across 20+ countries</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="how-section" id="how-it-works">
+  <div class="container">
+    <div class="section-header-row reveal">
+      <div>
+        <div class="section-label">The Process</div>
+        <h2 class="section-title">From "Which country?" to<br/><span class="accent">Offer Letter — sorted.</span></h2>
+      </div>
+      <p class="section-sub">We've distilled years of expertise into a simple 4-step journey. No confusion, no guesswork — just clarity and results.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-num">01</div>
+        <div class="step-icon-wrap"><i class="fa-solid fa-user-check"></i></div>
+        <h3>Free Profile Evaluation</h3>
+        <p>Tell us your academics, test scores, and dream destinations. We'll assess your profile and map out the universities you can realistically target — including some that'll surprise you.</p>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-num">02</div>
+        <div class="step-icon-wrap"><i class="fa-solid fa-compass-drafting"></i></div>
+        <h3>Personalized University Shortlist</h3>
+        <p>No generic lists. Your dedicated counselor builds a custom shortlist of 10–15 universities — safe, target, and reach — based on your profile, budget, and career goals.</p>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-card reveal reveal-delay-3">
+        <div class="step-num">03</div>
+        <div class="step-icon-wrap"><i class="fa-solid fa-file-pen"></i></div>
+        <h3>Application & SOP Magic</h3>
+        <p>Our expert writers and editors craft a compelling Statement of Purpose and polished applications that make admissions officers take notice — even with a 7.2 CGPA.</p>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-card reveal reveal-delay-4">
+        <div class="step-num">04</div>
+        <div class="step-icon-wrap"><i class="fa-solid fa-plane-departure"></i></div>
+        <h3>Visa, Loans & Takeoff</h3>
+        <p>From visa interviews to education loans and pre-departure prep — we stay with you until you're physically on the plane. That's our promise.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section class="features-section" id="features">
+  <div class="features-bg"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="section-header-row reveal">
+      <div>
+        <div class="section-label">What We Do</div>
+        <h2 class="section-title">Every service you need,<br/><span class="accent-pink">under one roof.</span></h2>
+      </div>
+      <p class="section-sub">Stop juggling five different services. GlobalPhDHub is the only platform that covers your entire abroad journey — end to end.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card featured reveal reveal-delay-1">
+        <div class="feature-icon icon-amber"><i class="fa-solid fa-earth-americas"></i></div>
+        <h3>Study Abroad Counselling</h3>
+        <p>1-on-1 sessions with counselors who've personally studied abroad. We understand Indian students inside-out — the CGPA pressure, the family expectations, the visa anxiety. We've got you.</p>
+        <span class="feature-tag tag-amber">Most Popular</span>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon icon-green"><i class="fa-solid fa-trophy"></i></div>
+        <h3>Scholarship Hunting</h3>
+        <p>Our AI-powered scholarship matcher finds awards you didn't know existed. We've helped students secure merit aid that reduced their tuition by up to 70%.</p>
+        <span class="feature-tag tag-green">₹480Cr+ Secured</span>
+      </div>
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-icon icon-blue"><i class="fa-solid fa-file-contract"></i></div>
+        <h3>SOP & Application Writing</h3>
+        <p>Your story matters. Our professional writers turn your experiences into a Statement of Purpose that actually stands out from the pile of generic applications.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon icon-pink"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+        <h3>Education Loans</h3>
+        <p>Collateral and non-collateral loans from 15+ partner banks and NBFCs. We negotiate on your behalf and get you the lowest interest rates available in the market.</p>
+        <span class="feature-tag tag-pink">Lowest Rates</span>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon icon-purple"><i class="fa-solid fa-passport"></i></div>
+        <h3>Visa Assistance</h3>
+        <p>98% visa success rate. Our visa experts prepare your documents, conduct mock interviews, and make sure you walk into the embassy fully ready and confident.</p>
+        <span class="feature-tag" style="background:rgba(160,100,255,0.1);color:#b46eff;border:1px solid rgba(160,100,255,0.2);">98% Success</span>
+      </div>
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-icon icon-amber"><i class="fa-solid fa-briefcase"></i></div>
+        <h3>Career Guidance</h3>
+        <p>Not sure which degree leads where? Our career counselors map your interests to real job markets and help you pick a program that actually pays off.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section class="pricing-section" id="pricing">
+  <div class="container">
+    <div class="section-header-row reveal">
+      <div>
+        <div class="section-label">Simple Pricing</div>
+        <h2 class="section-title">Invest in your future,<br/><span class="accent">not in confusion.</span></h2>
+      </div>
+      <p class="section-sub">No hidden charges. No surprise fees. Pick a plan and we'll take it from there. Every plan includes a free profile evaluation.</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:50px;" class="reveal">
+      <span class="toggle-label active">Monthly</span>
+      <div class="toggle-switch" id="billingToggle" onclick="toggleBilling()">
+        <div class="toggle-knob"></div>
+      </div>
+      <span class="toggle-label" id="annualLabel" style="color:var(--text-dim);">Annual</span>
+      <span class="save-badge">Save 30%</span>
+    </div>
+    <div class="pricing-grid">
+      <!-- Basic -->
+      <div class="price-card reveal reveal-delay-1">
+        <div class="price-plan-name">Explorer</div>
+        <div class="price-amount">
+          <span class="price-currency">₹</span>
+          <span class="price-num" id="price1">4,999</span>
+          <span class="price-period">/mo</span>
+        </div>
+        <p class="price-desc">For self-starters who need expert guidance on the essentials.</p>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li><i class="fa-solid fa-check"></i> Free profile evaluation</li>
+          <li><i class="fa-solid fa-check"></i> University shortlisting (up to 8)</li>
+          <li><i class="fa-solid fa-check"></i> 2 SOP drafts with feedback</li>
+          <li><i class="fa-solid fa-check"></i> Loan assistance (basic)</li>
+          <li><i class="fa-solid fa-check"></i> Email support</li>
+          <li class="dim"><i class="fa-solid fa-xmark"></i> Dedicated counselor</li>
+          <li class="dim"><i class="fa-solid fa-xmark"></i> Visa interview prep</li>
+          <li class="dim"><i class="fa-solid fa-xmark"></i> Scholarship hunting</li>
+        </ul>
+        <a href="#" class="btn-plan btn-plan-ghost">Get Started</a>
+      </div>
+      <!-- Popular -->
+      <div class="price-card popular reveal reveal-delay-2">
+        <div class="popular-badge">Most Popular</div>
+        <div class="price-plan-name">Achiever</div>
+        <div class="price-amount">
+          <span class="price-currency">₹</span>
+          <span class="price-num" id="price2">9,999</span>
+          <span class="price-period">/mo</span>
+        </div>
+        <p class="price-desc">The complete package for serious applicants who want to get into their dream university.</p>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li><i class="fa-solid fa-check"></i> Everything in Explorer</li>
+          <li><i class="fa-solid fa-check"></i> Dedicated senior counselor</li>
+          <li><i class="fa-solid fa-check"></i> University shortlisting (up to 15)</li>
+          <li><i class="fa-solid fa-check"></i> Unlimited SOP revisions</li>
+          <li><i class="fa-solid fa-check"></i> Scholarship hunting & matching</li>
+          <li><i class="fa-solid fa-check"></i> Visa interview prep (3 mocks)</li>
+          <li><i class="fa-solid fa-check"></i> Priority WhatsApp support</li>
+          <li class="dim"><i class="fa-solid fa-xmark"></i> Career pathway mapping</li>
+        </ul>
+        <a href="#" class="btn-plan btn-plan-primary">Start My Journey</a>
+      </div>
+      <!-- Premium -->
+      <div class="price-card reveal reveal-delay-3">
+        <div class="price-plan-name">Elite</div>
+        <div class="price-amount">
+          <span class="price-currency">₹</span>
+          <span class="price-num" id="price3">17,999</span>
+          <span class="price-period">/mo</span>
+        </div>
+        <p class="price-desc">White-glove, end-to-end support for students targeting the world's top 50 universities.</p>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li><i class="fa-solid fa-check"></i> Everything in Achiever</li>
+          <li><i class="fa-solid fa-check"></i> VIP counselor (ex-Ivy League)</li>
+          <li><i class="fa-solid fa-check"></i> Career pathway mapping</li>
+          <li><i class="fa-solid fa-check"></i> LOR coaching & review</li>
+          <li><i class="fa-solid fa-check"></i> Unlimited visa mocks</li>
+          <li><i class="fa-solid fa-check"></i> Full loan negotiation</li>
+          <li><i class="fa-solid fa-check"></i> Pre-departure briefing</li>
+          <li><i class="fa-solid fa-check"></i> 6-month post-arrival support</li>
+        </ul>
+        <a href="#" class="btn-plan btn-plan-ghost">Go Elite</a>
+      </div>
+    </div>
+    <p class="reveal" style="text-align:center;margin-top:28px;font-size:.85rem;color:var(--text-dim);">
+      <i class="fa-solid fa-shield-halved" style="color:var(--green);margin-right:6px;"></i>
+      7-day money-back guarantee · No lock-in contracts · Free profile evaluation for all plans
+    </p>
+  </div>
+</section>
+
+<!-- ===== MID-PAGE CTA BANNER ===== -->
+<section class="cta-banner">
+  <div class="container">
+    <div class="cta-banner-inner reveal">
+      <h2>Still figuring out if you're eligible?<br/>Let's find out <span class="accent">in 2 minutes.</span></h2>
+      <p>Answer 5 quick questions and get an instant eligibility report for universities across the US, UK, Canada, and Europe — completely free.</p>
+      <div class="cta-banner-btns">
+        <a href="#" class="btn-hero">Check My Eligibility <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#" class="btn-hero-outline"><i class="fa-solid fa-phone"></i> Talk to a Counselor</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="testimonials-section" id="testimonials">
+  <div class="testimonials-bg"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="section-header-row reveal">
+      <div>
+        <div class="section-label">Success Stories</div>
+        <h2 class="section-title">Real students.<br/><span class="accent">Real results.</span></h2>
+      </div>
+      <p class="section-sub">Don't take our word for it. These are actual students from across India who changed their lives with a little help from us.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card featured-testi reveal reveal-delay-1">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"I had a 7.2 CGPA and genuinely thought my dreams of studying in the US were over. GlobalPhDHub not only got me into <strong>NYU Tandon</strong> but also helped me bag a $15,000 scholarship. I'm literally living my dream right now."</p>
+        <div class="testi-footer">
+          <div class="testi-avatar av-1">P</div>
+          <div>
+            <div class="testi-name">Priya Sharma</div>
+            <div class="testi-meta">B.Tech CSE · VIT Vellore</div>
+          </div>
+          <div class="testi-uni-badge"><span>🇺🇸 NYU</span></div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"The SOP they wrote for me was genuinely on another level. My counselor, Arjun bhai, was available on WhatsApp at 11pm before my deadline. Got into <strong>University of Melbourne</strong> with a partial scholarship!"</p>
+        <div class="testi-footer">
+          <div class="testi-avatar av-2">R</div>
+          <div>
+            <div class="testi-name">Rohan Mehta</div>
+            <div class="testi-meta">MBA Aspirant · Pune</div>
+          </div>
+          <div class="testi-uni-badge"><span>🇦🇺 Melbourne</span></div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-3">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Visa rejected twice before I came to GlobalPhDHub. They diagnosed the exact issues in my documents, prepped me for the interview, and I got approved on my third attempt. Now at <strong>TU Munich</strong> — for free (German public uni!)."</p>
+        <div class="testi-footer">
+          <div class="testi-avatar av-3">A</div>
+          <div>
+            <div class="testi-name">Ananya Krishnan</div>
+            <div class="testi-meta">M.Sc Mechanical · NIT Trichy</div>
+          </div>
+          <div class="testi-uni-badge"><span>🇩🇪 TU Munich</span></div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"As a science student who had NO idea about scholarships, GlobalPhDHub found me the <strong>Commonwealth Scholarship</strong> I didn't even know existed. Saved my family ₹40 lakhs. Can't put a price on that."</p>
+        <div class="testi-footer">
+          <div class="testi-avatar av-4">S</div>
+          <div>
+            <div class="testi-name">Siddharth Nair</div>
+            <div class="testi-meta">MSc Biotech · IIT Bombay</div>
+          </div>
+          <div class="testi-uni-badge"><span>🇬🇧 Oxford</span></div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"My parents were worried about the education loan process — it felt so overwhelming. GlobalPhDHub handled everything: paperwork, negotiations, even got us a lower rate than what the bank initially offered. 10/10."</p>
+        <div class="testi-footer">
+          <div class="testi-avatar av-5">D</div>
+          <div>
+            <div class="testi-name">Divya Patel</div>
+            <div class="testi-meta">MS Data Science · Ahmedabad</div>
+          </div>
+          <div class="testi-uni-badge"><span>🇨🇦 U of Toronto</span></div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-3">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"First-gen college student, no connections, no idea how to apply abroad. GlobalPhDHub was my family. Got into <strong>Columbia's CS program</strong>. If I can do it, trust me, you can too."</p>
+        <div class="testi-footer">
+          <div class="testi-avatar av-6">K</div>
+          <div>
+            <div class="testi-name">Karthik Rajan</div>
+            <div class="testi-meta">B.E. CSE · Coimbatore</div>
+          </div>
+          <div class="testi-uni-badge"><span>🇺🇸 Columbia</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:56px;" class="reveal">
+      <div class="section-label" style="justify-content:center;">Got Questions?</div>
+      <h2 class="section-title">We've heard them all.<br/><span class="accent">Here's the truth.</span></h2>
+    </div>
+    <div class="faq-wrap">
+      <div class="faq-item open reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Can I study abroad with a low CGPA (below 7.5)?
+          <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+        </div>
+        <div class="faq-a">Absolutely yes — and this is one of the biggest myths we bust every day. Hundreds of our students with CGPAs between 6.0 and 7.5 have gotten into great universities in the US, UK, Canada, Germany, and Ireland. A low CGPA can be compensated by a strong GRE/IELTS score, a compelling SOP, solid work experience, or research projects. Our counselors know exactly which universities are the right fit for your specific profile.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How much does studying abroad actually cost? Is it worth it?
+          <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+        </div>
+        <div class="faq-a">Costs vary by country — the US and UK are expensive (₹40–80L total), while Germany, France, and some Canadian provinces have near-zero tuition. But here's the real question: post-degree salaries abroad (especially in tech, finance, and healthcare) can range from ₹50–1.5Cr per year. With smart scholarship hunting, education loans, and the right country choice, the ROI is typically achieved within 2–3 years of working. We'll help you run the actual numbers for your situation.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Do I need GRE/GMAT? What if my score is low?
+          <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+        </div>
+        <div class="faq-a">Many universities — including top-50 programs — have gone GRE/GMAT optional post-2020, and many more never required it. For countries like Germany, Ireland, and parts of Canada, GRE is rarely needed at all. If you do have a low score, we help you identify universities that weigh other factors more heavily, and we'll guide you on whether a retake makes strategic sense for your timeline.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How long does the entire process take?
+          <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+        </div>
+        <div class="faq-a">Typically 6–12 months from your first counselling session to your visa approval. Here's a rough breakdown: 1–2 months for profile building + test prep, 2–3 months for applications and SOPs, 1–2 months for decisions and scholarship negotiations, and 2–3 months for visa processing. We build a personalised timeline with you in your very first session so you always know what's next.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What if I get rejected? Do you offer refunds?
+          <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+        </div>
+        <div class="faq-a">We offer a 7-day money-back guarantee on all plans. More importantly, we strategically diversify your application list across safe, target, and reach universities — so rejection from one or two schools is built into the plan. Our median student gets accepted into 4–6 universities. In the extremely rare case of zero admits, our team will work with you at no extra cost to explore alternate intake options.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Can I get an education loan without collateral?
+          <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+        </div>
+        <div class="faq-a">Yes — and this is something we specialise in. We have partnerships with 15+ lenders who offer non-collateral loans up to ₹50 lakhs for admitted students at accredited universities. Collateral-based loans can go much higher. Our loan advisors help you compare options, prepare the application, and even negotiate interest rates — we've gotten students rates as low as 9.5% per annum.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FINAL CTA ===== -->
+<section class="cta-banner" style="padding-top:0;">
+  <div class="container">
+    <div class="cta-banner-inner reveal" style="background:linear-gradient(135deg,rgba(232,67,147,0.1),rgba(245,166,35,0.08));">
+      <div class="section-label" style="justify-content:center;margin-bottom:18px;">Your Move</div>
+      <h2>Your dream university isn't<br/>going to apply <span class="accent-pink">itself.</span></h2>
+      <p>10 minutes with a GlobalPhDHub counselor could change the next 10 years of your life. The consultation is free. The regret of not trying isn't.</p>
+      <div class="cta-banner-btns">
+        <a href="#" class="btn-hero">Get Free Counselling <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#" class="btn-hero-outline"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" style="margin-bottom:0;">
+          <div class="nav-logo-icon">G</div>
+          <span class="nav-logo-text">Global<span>PhD</span>Hub</span>
+        </a>
+        <p>India's most trusted study abroad platform, helping 15,000+ students turn their ambitions into admit letters since 2018.</p>
+        <div class="footer-social">
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#">Study Abroad Counselling</a></li>
+          <li><a href="#">Scholarship Matching</a></li>
+          <li><a href="#">SOP Writing</a></li>
+          <li><a href="#">Education Loans</a></li>
+          <li><a href="#">Visa Assistance</a></li>
+          <li><a href="#">Career Guidance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Destinations</h4>
+        <ul>
+          <li><a href="#">Study in USA 🇺🇸</a></li>
+          <li><a href="#">Study in UK 🇬🇧</a></li>
+          <li><a href="#">Study in Canada 🇨🇦</a></li>
+          <li><a href="#">Study in Germany 🇩🇪</a></li>
+          <li><a href="#">Study in Australia 🇦🇺</a></li>
+          <li><a href="#">Study in Singapore 🇸🇬</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Our Counselors</a></li>
+          <li><a href="#">Blog & Resources</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Partner Universities</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 GlobalPhDHub. All rights reserved. Made with ♥ for India's ambitious students.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== JS ===== -->
+<script>
+  // --- NAVBAR SCROLL ---
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 30);
+    // Active link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const links = document.querySelectorAll('.nav-links a');
+    let currentSection = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 160) currentSection = s.getAttribute('id');
+    });
+    links.forEach(l => {
+      l.classList.remove('active');
+      if (l.getAttribute('href') === `#${currentSection}`) l.classList.add('active');
+    });
+  });
+
+  // --- HAMBURGER MENU ---
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburgerBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    const icon = hamburgerBtn.querySelector('i');
+    icon.classList.toggle('fa-bars');
+    icon.classList.toggle('fa-xmark');
+  });
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+    const icon = hamburgerBtn.querySelector('i');
+    icon.classList.add('fa-bars');
+    icon.classList.remove('fa-xmark');
+  }
+
+  // --- SCROLL REVEAL ---
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => observer.observe(el));
+
+  // --- FAQ TOGGLE ---
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // --- PRICING TOGGLE ---
+  const prices = {
+    monthly: ['4,999','9,999','17,999'],
+    annual:  ['3,499','6,999','12,599']
+  };
+  let isAnnual = false;
+  function toggleBilling() {
+    isAnnual = !isAnnual;
+    const toggle = document.getElementById('billingToggle');
+    const label = document.getElementById('annualLabel');
+    toggle.classList.toggle('on', isAnnual);
+    label.style.color = isAnnual ? 'var(--text-primary)' : 'var(--text-dim)';
+    const set = isAnnual ? prices.annual : prices.monthly;
+    document.getElementById('price1').textContent = set[0];
+    document.getElementById('price2').textContent = set[1];
+    document.getElementById('price3').textContent = set[2];
+  }
+
+  // --- SMOOTH SCROLL for all anchor links ---
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        closeMobile();
+      }
+    });
+  });
+
+  // --- COUNTER ANIMATION for stats ---
+  function animateCounter(el, target, duration=1800) {
+    let start = 0;
+    const step = timestamp => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const val = Math.floor(progress * target);
+      el.textContent = val.toLocaleString('en-IN');
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target.toLocaleString('en-IN');
+    };
+    requestAnimationFrame(step);
+  }
+
+  // Observe stats bar
+  const statsBar = document.querySelector('.stats-bar-inner');
+  if (statsBar) {
+    const statsObserver = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        const nums = statsBar.querySelectorAll('.stat-num');
+        const targets = [15000, 98, 480, 500];
+        nums.forEach((n, i) => {
+          const plusEl = n.querySelector('.plus');
+          const text = n.textContent.replace(/[^0-9]/g,'');
+          n.innerHTML = '';
+          const span = document.createElement('span');
+          span.classList.add('count-span');
+          n.appendChild(span);
+          if (plusEl) n.appendChild(plusEl);
+          animateCounter(span, targets[i]);
+        });
+        statsObserver.unobserve(statsBar);
+      }
+    }, { threshold: 0.3 });
+    statsObserver.observe(statsBar);
+  }
+</script>
+<script>
+async function registerUser() {
+  const data = {
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    phone: document.getElementById("phone").value,
+    interest: "PhD Abroad"
+  };
+
+  const res = await fetch("https://backend-7nt1.onrender.com/api/users/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+  alert(result.message || result.error);
+}
+</script>
+</body>
+</html>
